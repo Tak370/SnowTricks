@@ -11,13 +11,13 @@ class Video
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $plateform;
+    private ?string $plateform = null;
 
     #[ORM\Column(type: 'integer')]
-    private $plateformId;
+    private ?int $plateformId;
 
     public function getId(): ?int
     {

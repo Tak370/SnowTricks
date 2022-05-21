@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -11,28 +12,28 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $username;
+    private ?string $username = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $email;
+    private ?string $email = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $password;
+    private ?string $password = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $roles;
+    private ?string $roles = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $token;
+    private ?string $token = null;
 
     #[ORM\Column(type: 'boolean')]
     private $status;
 
     #[ORM\Column(type: 'datetime')]
-    private $createdAt;
+    private DateTime $createdAt;
 
     public function getId(): ?int
     {
