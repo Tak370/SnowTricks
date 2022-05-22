@@ -27,6 +27,7 @@
         "symfony/mailer": "6.0.*",
         "symfony/mime": "6.0.*",
         "symfony/monolog-bundle": "^3.0",
+        "symfony/notifier": "6.0.*",
         "symfony/process": "6.0.*",
         "symfony/property-access": "6.0.*",
         "symfony/property-info": "6.0.*",
@@ -75,6 +76,12 @@
         "symfony/polyfill-php80": "*"
     },
     "scripts": {
+        "prepare": [
+            "bin/console doctrine:database:drop -f",
+            "bin/console doctrine:database:create",
+            "bin/console doctrine:schema:update -f",
+            "bin/console doctrine:fixtures:load -n"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
@@ -96,6 +103,8 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "fakerphp/faker": "^1.19",
         "symfony/debug-bundle": "6.0.*",
         "symfony/maker-bundle": "^1.0",
         "symfony/stopwatch": "6.0.*",
