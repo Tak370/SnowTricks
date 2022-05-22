@@ -6,7 +6,9 @@ use App\Repository\TrickRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
@@ -21,6 +23,9 @@ class Trick
 
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $slug = null;
+
+    #[Column(type: Types::STRING)]
+    private string $featuredImage;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description;
@@ -72,6 +77,16 @@ class Trick
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function getFeaturedImage(): string
+    {
+        return $this->featuredImage;
+    }
+
+    public function setFeaturedImage(string $featuredImage): void
+    {
+        $this->featuredImage = $featuredImage;
     }
 
     public function getDescription(): ?string
@@ -163,4 +178,5 @@ class Trick
 
         return $this;
     }
+
 }
