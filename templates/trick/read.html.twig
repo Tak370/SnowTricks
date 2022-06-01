@@ -1,0 +1,25 @@
+{% extends 'secondary.html.twig' %}
+
+{% block title %}{{ trick.name }}{% endblock %}
+
+{% block body %}
+
+    <!-- Tricks-->
+    <section class="tricks-section bg-light" id="tricks">
+        <div class="trick container px-1 px-lg-2">
+
+            <div class="row mt-4">
+                <div class="col-12 col-lg-4 col-xl-3">
+                    <img src="{{ asset('uploads/' ~ trick.featuredImage) }}" class="mw-100" alt="{{ trick.name }}">
+                </div>
+                <div class="col-12 col-lg-8 col-xl-9">
+                    <h1 class="my-4">{{ trick.name }}</h1>
+                    <span class="text-muted small">Ajouté le {{ trick.createdAt|date('d/m/Y H:i') }}</span>
+                    <p class="m-0 mt-2 flex-grow-1">{{ trick.description|nl2br }}</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}
