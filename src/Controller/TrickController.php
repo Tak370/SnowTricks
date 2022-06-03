@@ -5,30 +5,36 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/trick', name: 'trick_')]
 class TrickController extends AbstractController
 {
-    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TrickRepository $trickRepository): Response
+    #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
+    public function create(Request $request, EntityManagerInterface $entityManager, string $uploadDir): Response
     {
         $trick = new Trick();
-        $form = $this->createForm(TrickType::class, $trick);
-        $form->handleRequest($request);
+        $form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $trickRepository->add($trick, true);
+        if ($form->isSubmitted() and $form->isValid()) {
+            $trick->setCreatedAt(new DateTime());
+            $trick->setFeaturedImage(sprintf('%s.%s', Uuid::v4(), $trick->getImageFile()->getClientOriginalExtension()));
+            $trick->getImageFile()->move($uploadDir, $trick->getFeaturedImage());
+            $entityManager->persist($trick);
 
-            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('trick_read', ['slug' => $trick->getSlug()]);
         }
 
-        return $this->renderForm('trick/new.html.twig', [
-            'trick' => $trick,
-            'form' => $form,
+        return $this->renderForm('trick/create.html.twig', [
+            'form' => $form
         ]);
     }
 
