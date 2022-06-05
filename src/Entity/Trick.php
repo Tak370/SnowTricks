@@ -9,6 +9,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Image;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
@@ -19,15 +23,21 @@ class Trick
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[NotBlank]
     private ?string $slug = null;
 
     #[Column(type: Types::STRING)]
     private string $featuredImage;
 
+    #[Image(maxSize: '1M', maxRatio: 16/9, minRatio: 1)]
+    private ?UploadedFile $imageFile = null;
+
     #[ORM\Column(type: 'text', nullable: true)]
+    #[NotBlank]
     private ?string $description;
 
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
@@ -40,6 +50,7 @@ class Trick
     private ?DateTime $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'tricks')]
+    #[NotNull]
     private Category $category;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
@@ -177,6 +188,16 @@ class Trick
         }
 
         return $this;
+    }
+
+    public function getImageFile(): ?UploadedFile
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?UploadedFile $imageFile): void
+    {
+        $this->imageFile = $imageFile;
     }
 
 }

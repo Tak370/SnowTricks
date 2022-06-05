@@ -1,0 +1,26 @@
+{% extends 'secondary.html.twig' %}
+
+{% block title %}Nouveau Trick{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <div class="row">
+            <div class="col-12 my-4 pt-5">
+                <h2>Créer un nouveau Trick</h2>
+            </div>
+            <div class="col-12">
+                {{ form_start(form) }}
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.slug) }}
+                    {{ form_row(form.category) }}
+                    {{ form_row(form.featuredText) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.imageFile) }}
+                <div>
+                        <button class="btn btn-primary mb-5">Créer</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}

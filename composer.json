@@ -38,6 +38,7 @@
         "symfony/string": "6.0.*",
         "symfony/translation": "6.0.*",
         "symfony/twig-bundle": "6.0.*",
+        "symfony/uid": "6.0.*",
         "symfony/validator": "6.0.*",
         "symfony/web-link": "6.0.*",
         "symfony/webapp-meta": "^1.0",
@@ -77,7 +78,7 @@
     },
     "scripts": {
         "prepare": [
-            "bin/console doctrine:database:drop -f",
+            "bin/console doctrine:database:drop -f --if-exists",
             "bin/console doctrine:database:create",
             "bin/console doctrine:schema:update -f",
             "bin/console doctrine:fixtures:load -n"
