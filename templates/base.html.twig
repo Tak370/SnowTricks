@@ -36,10 +36,28 @@
     </nav>
 
     {% block body %}{% endblock %}
-
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="/js/jquery.easing.min.js"></script>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="/js/scripts.js"></script>
+
+    <script>
+        $(function () {
+            $(".card").slice(0, 15).show();
+            $("#loadMore").on('click', function (e) {
+                e.preventDefault();
+                $(".fa-arrow-up:hidden").slideDown();
+                $(".card:hidden").slice(0, 15).slideDown();
+                if ($(".card:hidden").length == 0) {
+                    $("#load").fadeOut('slow');
+                }
+                $('html,body').animate({
+                    scrollTop: $(this).offset().top
+                }, 1500);
+            });
+        });
+    </script>
 </body>
 </html>

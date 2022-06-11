@@ -11608,6 +11608,19 @@ body {
 }
 
 /* Tricks Section */
+.card {
+  display: none;
+}
+
+#loadLessTrick {
+  display: none;
+}
+
+#scroll-up {
+  position: absolute;
+  right: 5%;
+}
+
 @media (min-width: 1140px) {
   .col-xl-2_4 {
     -webkit-box-flex: 0;
