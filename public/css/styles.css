@@ -11555,8 +11555,8 @@ body {
 /* Header */
 #scroll-down {
   position: absolute;
-  right: 5%;
-  bottom: 10%;
+  right: 45%;
+  bottom: 30%;
 }
 
 .masthead {
@@ -11586,6 +11586,11 @@ body {
   font-size: 1rem;
 }
 @media (min-width: 768px) {
+  #scroll-down {
+    position: absolute;
+    right: 5%;
+    bottom: 10%;
+  }
   .masthead h1, .masthead .h1 {
     font-size: 4rem;
     line-height: 4rem;
@@ -11621,7 +11626,7 @@ body {
   right: 5%;
 }
 
-@media (min-width: 1140px) {
+@media (min-width: 1200px) {
   .col-xl-2_4 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 20%;
