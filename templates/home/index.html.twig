@@ -3,7 +3,9 @@
 {% block title %}Snowtricks - Bienvenue{% endblock %}
 
 {% block body %}
+
     <!-- Masthead-->
+
     <header class="masthead">
         <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
             <div class="d-flex justify-content-center">
@@ -13,16 +15,22 @@
                 </div>
             </div>
         </div>
-        <a id="scroll-down" href="#tricks"><i class="fa-solid fa-arrow-down fa-4x"></i></a>
+        <div>
+            <a id="scroll-down" href="#tricks"><i class="fa-solid fa-arrow-down fa-4x"></i></a>
+        </div>
     </header>
+
     <!-- Tricks-->
+
     <section class="tricks-section bg-light" id="tricks">
+
+        <div class="container text-center pt-4 mb-4">
+            <h1>Les Tricks</h1>
+        </div>
+
         <div class="container pt-4 px-1 px-lg-2">
 
             <div class="row align-items-stretch">
-
-                <h1 class="mb-4">Les Tricks</h1>
-
                 {% for trick in tricks %}
                     <div class="col-12 col-lg-4 col-xl-2_4 mb-4">
                         <article class="card h-100">
@@ -42,8 +50,14 @@
                         </article>
                     </div>
                 {% endfor %}
-
             </div>
 
         </div>
+
+        <div class="container pb-4 text-center">
+            <button class="btn btn-success" id="loadMore">Voir plus</button>
+            <a id="scroll-up" href="#tricks"><i class="fa-solid fa-arrow-up fa-4x"></i></a>
+        </div>
+
+
     </section>{% endblock %}
