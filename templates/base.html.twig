@@ -44,20 +44,30 @@
     <script src="/js/scripts.js"></script>
 
     <script>
+        // load more button
         $(function () {
             $(".card").slice(0, 15).show();
             $("#loadMore").on('click', function (e) {
                 e.preventDefault();
-                $(".fa-arrow-up:hidden").slideDown();
                 $(".card:hidden").slice(0, 15).slideDown();
                 if ($(".card:hidden").length == 0) {
                     $("#load").fadeOut('slow');
                 }
-                $('html,body').animate({
-                    scrollTop: $(this).offset().top
-                }, 1500);
             });
         });
+
+        // scrollUp button to go back to top
+        const scrollUp = document.querySelector('#scroll-up');
+
+        window.addEventListener('scroll', checkHeight)
+
+        function checkHeight() {
+            if (window.scrollY > 1800) {
+                scrollUp.style.display = "flex"
+            } else {
+                scrollUp.style.display = "none"
+            }
+        }
     </script>
 </body>
 </html>

@@ -11622,8 +11622,10 @@ body {
 }
 
 #scroll-up {
-  position: absolute;
+  position: fixed;
   right: 5%;
+  bottom: 7%;
+  display: none;
 }
 
 @media (min-width: 1200px) {
