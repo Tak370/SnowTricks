@@ -3,76 +3,60 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Form\CommentType;
 use App\Repository\CommentRepository;
+use App\Repository\TrickRepository;
+use App\Repository\UserRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/comment')]
 class CommentController extends AbstractController
 {
-    #[Route('/', name: 'comment_index', methods: ['GET'])]
-    public function index(CommentRepository $commentRepository): Response
-    {
-        return $this->render('comment/index.html.twig', [
-            'comments' => $commentRepository->findAll(),
-        ]);
-    }
+    #[Route('/ajax/comment', name: 'comment_add')]
+    public function add(
+        Request $request,
+        TrickRepository $trickRepository,
+        CommentRepository $commentRepository,
+        EntityManagerInterface $entityManager,
+        UserRepository $userRepository
+    ): Response    {
+        $commentData = $request->request->all('comment');
 
-    #[Route('/new', name: 'comment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommentRepository $commentRepository): Response
-    {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commentRepository->add($comment, true);
-
-            return $this->redirectToRoute('comment_index', [], Response::HTTP_SEE_OTHER);
+        if (!$this->isCsrfTokenValid('comment-add', $commentData['_token'])) {
+            return $this->json([
+                'code' => 'INVALID_CSRF_TOKEN'
+            ], Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->renderForm('comment/new.html.twig', [
-            'comment' => $comment,
-            'form' => $form,
-        ]);
-    }
+        $trick = $trickRepository->findOneBy(['id' => $commentData['trick']]);
 
-    #[Route('/{id}', name: 'comment_show', methods: ['GET'])]
-    public function show(Comment $comment): Response
-    {
-        return $this->render('comment/show.html.twig', [
-            'comment' => $comment,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'comment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Comment $comment, CommentRepository $commentRepository): Response
-    {
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commentRepository->add($comment, true);
-
-            return $this->redirectToRoute('comment_index', [], Response::HTTP_SEE_OTHER);
+        if (!$trick) {
+            return $this->json([
+                'code' => 'TRICK_NOT_FOUND'
+            ], Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->renderForm('comment/edit.html.twig', [
-            'comment' => $comment,
-            'form' => $form,
+        $comment = new Comment($trick);
+        $comment->setContent($commentData['content']);
+        $comment->setUser($userRepository->findOneBy(['id' => 1]));
+        $comment->setCreatedAt(new DateTime());
+
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        $html = $this->renderView('comment/index.html.twig', [
+            'comment' => $comment
+        ]);
+
+        return $this->json([
+            'code' => 'COMMENT_SUCCESSFULLY_ADDED',
+            'message' => $html,
+            'commentsNumber' => $commentRepository->count(['trick' => $trick])
         ]);
     }
 
-    #[Route('/{id}', name: 'comment_delete', methods: ['POST'])]
-    public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
-            $commentRepository->remove($comment, true);
-        }
 
-        return $this->redirectToRoute('comment_index', [], Response::HTTP_SEE_OTHER);
-    }
 }

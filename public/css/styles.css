@@ -11613,12 +11613,13 @@ body {
 }
 
 /* Tricks Section */
-.card {
+.card-trick {
   display: none;
 }
 
-#loadLessTrick {
-  display: none;
+#loadMore:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 #scroll-up {
@@ -11638,32 +11639,32 @@ body {
 }
 
 
-/******************************************** SECONDARY ***********************************************/
+/******************************************** CORE ***********************************************/
 
 /* Navigation */
-#secondaryNav {
+#coreNav {
   min-height: 3.5rem;
   background-color: #fff;
 }
-#secondaryNav .navbar-toggler {
+#coreNav .navbar-toggler {
   font-size: 80%;
   padding: 0.75rem;
   color: #64a19d;
   border: 1px solid #64a19d;
 }
-#secondaryNav .navbar-toggler:focus {
+#coreNav .navbar-toggler:focus {
   outline: none;
 }
-#secondaryNav .navbar-brand {
+#coreNav .navbar-brand {
   color: #000;
   font-weight: 700;
   padding: 0.9rem 0;
 }
-#secondaryNav .nav-link:hover {
+#coreNav .nav-link:hover {
   color: #64a19d;
 }
 
-/* Trick */
+/* Read Section */
 .trick {
   padding-top: 100px;
   padding-bottom: 40px;

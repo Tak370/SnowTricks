@@ -33,7 +33,7 @@
             <div class="row align-items-stretch">
                 {% for trick in tricks %}
                     <div class="col-12 col-md-4 col-xl-2_4 mb-4">
-                        <article class="card h-100">
+                        <article class="card card-trick h-100">
 
                             <a href="{{ path('trick_read', {slug: trick.slug}) }}" class="text-body">
                                 <img src="{{ asset('uploads/jess-bailey-l3N9Q27zULw-unsplash.jpg') }}" alt="{{ trick.name }}" class="card-img-top">

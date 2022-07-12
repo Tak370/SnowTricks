@@ -9,13 +9,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
+use Stringable;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Image;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-class Trick
+class Trick implements Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -200,4 +201,8 @@ class Trick
         $this->imageFile = $imageFile;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
