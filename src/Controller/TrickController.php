@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use DateTime;
@@ -41,8 +43,13 @@ class TrickController extends AbstractController
     #[Route('/read/{slug}', name: 'read', methods: ['GET'])]
     public function read(Trick $trick): Response
     {
-        return $this->render('trick/read.html.twig', [
+        $comment = new Comment($trick);
+
+        $commentForm = $this->createForm(CommentType::class, $comment);
+
+        return $this->renderForm('trick/read.html.twig', [
             'trick' => $trick,
+            'commentForm' => $commentForm
         ]);
     }
 
