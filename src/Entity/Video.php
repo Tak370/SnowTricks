@@ -16,8 +16,14 @@ class Video
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $plateform = null;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $url = null;
+
     #[ORM\Column(type: 'integer')]
     private ?int $plateformId;
+
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'videos')]
+    private $trick;
 
     public function getId(): ?int
     {
@@ -47,4 +53,26 @@ class Video
 
         return $this;
     }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): void
+    {
+        $this->url = $url;
+    }
+
+    public function getTrick()
+    {
+        return $this->trick;
+    }
+
+    public function setTrick($trick): void
+    {
+        $this->trick = $trick;
+    }
+
+
 }

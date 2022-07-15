@@ -18,7 +18,7 @@ class TrickType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'Nom du trick',
                 'empty_data' => ''
             ])
             ->add('slug', TextType::class, [
